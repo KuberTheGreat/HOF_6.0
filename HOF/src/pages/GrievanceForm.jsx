@@ -12,6 +12,7 @@ const GrievanceForm = () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({statement}),
+            mode: 'no-cors'
         });
 
         const data = await response.json();
