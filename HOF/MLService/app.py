@@ -1,6 +1,7 @@
 import pandas as pd
 import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer
+from fastapi.staticfiles import StaticFiles
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import train_test_split
@@ -38,6 +39,19 @@ with open("grievance_model.pkl", "rb") as model_file:
 
 class GrievanceRequest(BaseModel):
     statement: str
+
+class SPAStaticFiles(StaticFiles):
+    async def get_response(self, path: str, scope):
+        response = await super().get_response(path, scope)
+        if response.status_code == 404:
+            response = await super().get_response('.', scope)
+        return response
+
+app.mount('/', SPAStaticFiles(directory='../dist', html=True), name='index')
+
+@app.get("/health")
+def heathcheck():
+    return {"data" : "everything is working good"}
 
 @app.post("/predict/")
 def predict_department(request: GrievanceRequest):
