@@ -6,7 +6,7 @@ const GrievanceForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch("http://0.0.0.0:8000/predict/", {
+        const response = await fetch("https://project-deployement.onrender.com/predict/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

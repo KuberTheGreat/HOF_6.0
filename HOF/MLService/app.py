@@ -49,10 +49,17 @@ class SPAStaticFiles(StaticFiles):
 
 app.mount('/', SPAStaticFiles(directory='../dist', html=True), name='index')
 
-@app.post("/predict/")
+@app.get("/predict")
+def test_get():
+    return {"message": "GET is working, but use POST!"}
+
+@app.post("/predict")
 def predict_department(request: GrievanceRequest):
-    prediction = model.predict([request.statement])
-    return {"department": prediction[0]}
+    try:
+        prediction = model.predict([request.statement])
+        return {"department": prediction[0]}
+    except Exception as e:
+        return {"error": str(e)}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
