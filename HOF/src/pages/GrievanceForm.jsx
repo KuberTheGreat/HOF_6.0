@@ -11,7 +11,7 @@ const GrievanceForm = () => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({statement}),
+            body: JSON.stringify({statement})
         });
 
         const data = await response.json();
