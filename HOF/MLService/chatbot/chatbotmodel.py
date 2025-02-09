@@ -1,10 +1,10 @@
-!pip install -q langchain_google_genai
-
-!pip install -q langchain
-
-!pip install -q langchain_community
-
+import subprocess
 import os
+
+subprocess.run(["pip", "install", "-q", "langchain_google_genai"])
+subprocess.run(["pip", "install", "-q", "langchain"])
+subprocess.run(["pip", "install", "-q", "langchain_community"])
+
 
 os.environ["LANGSMITH_TRACING"]="true"
 os.environ["LANGSMITH_ENDPOINT"]="https://api.smith.langchain.com"
@@ -79,7 +79,7 @@ config = {"configurable": {"session_id": "secondtchat"}}
 
 {'configurable': {'session_id': 'secondtchat'}}
 
-model_with_memory.invoke([HumanMessage(content="what is my name?")],config=con
+model_with_memory.invoke([HumanMessage(content="what is my name?")],config=config)
                          
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
