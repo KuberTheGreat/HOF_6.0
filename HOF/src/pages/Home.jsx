@@ -3,6 +3,7 @@ import { Send } from "lucide-react";
 import UP_logo from "../assets/Home/up_logo.png";
 import GrievanceForm from "./GrievanceForm";
 import Sidebar from "../components/Sidebar";
+import ChatbotComponent from "../components/ChatbotComp";
 
 
 export default function Home() {
@@ -13,7 +14,8 @@ export default function Home() {
             </div>
 
             <div className="h-screen w-full">
-                <GrievanceForm/>
+                {/* <GrievanceForm/> */}
+                <ChatbotComponent/>
             </div>
         </div>
     );

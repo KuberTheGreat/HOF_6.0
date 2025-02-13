@@ -90,7 +90,7 @@ const GrievanceForm = () => {
         // Simulate bot response
         setMessages((prev) => [
         ...prev,
-        { text: `Your grievance is under ${data.department}`, sender: "bot" },
+        { text: `Your grievance is sent to ${data.department} department`, sender: "bot" },
         ]);
     };
     
