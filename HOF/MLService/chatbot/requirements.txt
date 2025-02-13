@@ -1,0 +1,9 @@
+subprocess
+os
+fastapi
+pydantic
+uvicorn
+pickle
+langchain_google_genai
+langchain_core
+operator

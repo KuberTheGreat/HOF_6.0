@@ -1,5 +1,10 @@
 import subprocess
 import os
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
+import pickle
 
 subprocess.run(["pip", "install", "-q", "langchain_google_genai"])
 subprocess.run(["pip", "install", "-q", "langchain"])
@@ -244,3 +249,38 @@ response = model_with_memory.invoke(
 )
 
 response.content
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class ChatInput(BaseModel):
+    session_id: str
+    message: str
+
+def get_session_history(session_id: str):
+    if session_id not in store:
+        store[session_id] = InMemoryChatMessageHistory()
+    return store[session_id]
+
+model_with_memory = RunnableWithMessageHistory(model, get_session_history)
+
+@app.post("/chat")
+async def chat(input_data: ChatInput):
+    """Handles chatbot interactions."""
+    try:
+        config = {"configurable": {"session_id": input_data.session_id}}
+        response = model_with_memory.invoke([HumanMessage(content=input_data.message)], config=config)
+        return {"response": response.content}
+    except Exception as e:
+        return {"error": str(e)}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

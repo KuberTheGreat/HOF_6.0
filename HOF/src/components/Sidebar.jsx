@@ -8,7 +8,7 @@ export default function Sidebar() {
     <div className="flex">
       <div className={`h-screen bg-gray-900 text-white p-4 transition-all ${isOpen ? "w-64" : "w-16"}`}>
         <button
-          className="mb-4 flex items-center gap-2 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 w-full"
+          className="mb-4 flex items-center gap-2 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 w-full cursor-pointer"
         >
           <Home size={24} />
           {isOpen && <span>Home</span>}
